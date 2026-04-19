@@ -207,7 +207,7 @@ function DashboardPage() {
           label="Watchlist Risk Score"
           value={String(avgRisk)}
           unit="/ 100"
-          delta={avgRisk >= 70 ? "ELEVATED" : avgRisk >= 50 ? "WATCH" : "LOW"}
+          delta={watchlistScopeLabel}
           deltaDir="flat"
           tone={avgRisk >= 80 ? "critical" : avgRisk >= 60 ? "elevated" : avgRisk >= 40 ? "watch" : "low"}
         />
