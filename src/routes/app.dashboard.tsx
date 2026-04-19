@@ -66,6 +66,7 @@ function DashboardPage() {
   const [prices, setPrices] = useState<PriceSnap[]>([]);
   const [loading, setLoading] = useState(true);
   const [window, setWindow] = useState<Window>("30d");
+  const { items: watchItems } = useWatchlist();
 
   useEffect(() => {
     let cancelled = false;
@@ -114,13 +115,31 @@ function DashboardPage() {
   const priceDelta =
     latestPrice && sevenDaysAgo ? ((latestPrice - sevenDaysAgo) / sevenDaysAgo) * 100 : 0;
 
-  // Watchlist risk score = avg severity rank of all regions (placeholder until watchlist hooked)
+  // Watchlist risk score — weighted average across watched regions (or all if empty)
+  const watchedRegionIds = useMemo(() => {
+    const ids = new Set<string>();
+    watchItems.forEach((w) => {
+      if (w.entity_type === "region") ids.add(w.entity_id);
+    });
+    return ids;
+  }, [watchItems]);
+
+  const scoredRegions =
+    watchedRegionIds.size > 0
+      ? regions.filter((r) => watchedRegionIds.has(r.id))
+      : regions;
+
   const avgRisk =
-    regions.length > 0
+    scoredRegions.length > 0
       ? Math.round(
-          (regions.reduce((sum, r) => sum + severityRank[r.risk_level], 0) / regions.length) * 25,
+          (scoredRegions.reduce((sum, r) => sum + severityRank[r.risk_level], 0) /
+            scoredRegions.length) *
+            25,
         )
       : 0;
+
+  const watchlistScopeLabel =
+    watchItems.length > 0 ? `${watchItems.length} watched` : "all regions";
 
   // Supply buffer (Europe) — IEA narrative says 6 weeks
   const europeBuffer = "6w";
