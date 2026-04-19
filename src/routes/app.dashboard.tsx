@@ -13,6 +13,7 @@ import {
   YAxis,
 } from "recharts";
 import { ArrowDown, ArrowUp, ExternalLink, Minus, RefreshCw } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { SeverityBadge } from "@/components/SeverityBadge";
 import {
@@ -24,6 +25,7 @@ import {
 } from "@/lib/severity";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useWatchlist } from "@/hooks/useWatchlist";
 
 export const Route = createFileRoute("/app/dashboard")({
   head: () => ({
