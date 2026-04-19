@@ -81,10 +81,32 @@ function LoginPage() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full" disabled={loading || demoLoading}>
               {loading ? "Signing in…" : "Sign in"}
             </Button>
           </form>
+          <div className="relative my-5">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-card px-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                or
+              </span>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={onDemo}
+            disabled={loading || demoLoading}
+          >
+            {demoLoading ? "Loading demo…" : "Try the demo (no signup)"}
+          </Button>
+          <p className="mt-2 text-center text-[11px] text-muted-foreground">
+            Instant access to a shared analyst workspace.
+          </p>
           <div className="mt-6 text-center text-xs text-muted-foreground">
             Don't have an account?{" "}
             <Link to="/auth/signup" className="text-primary hover:underline">
