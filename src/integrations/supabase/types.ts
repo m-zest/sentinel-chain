@@ -14,16 +14,504 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      airports: {
+        Row: {
+          annual_fuel_demand_bbl: number | null
+          created_at: string
+          fuel_source_ids: Json | null
+          iata_code: string
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          region_id: string | null
+        }
+        Insert: {
+          annual_fuel_demand_bbl?: number | null
+          created_at?: string
+          fuel_source_ids?: Json | null
+          iata_code: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          region_id?: string | null
+        }
+        Update: {
+          annual_fuel_demand_bbl?: number | null
+          created_at?: string
+          fuel_source_ids?: Json | null
+          iata_code?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          region_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "airports_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      alerts: {
+        Row: {
+          active: boolean
+          channel: string
+          created_at: string
+          id: string
+          last_fired_at: string | null
+          name: string
+          trigger_config: Json
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          channel?: string
+          created_at?: string
+          id?: string
+          last_fired_at?: string | null
+          name: string
+          trigger_config?: Json
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          channel?: string
+          created_at?: string
+          id?: string
+          last_fired_at?: string | null
+          name?: string
+          trigger_config?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
+      news_articles: {
+        Row: {
+          created_at: string
+          headline: string
+          id: string
+          linked_event_id: string | null
+          published_at: string
+          risk_score: number | null
+          source: string | null
+          source_url: string | null
+          summary: string | null
+          tags: Json | null
+        }
+        Insert: {
+          created_at?: string
+          headline: string
+          id?: string
+          linked_event_id?: string | null
+          published_at?: string
+          risk_score?: number | null
+          source?: string | null
+          source_url?: string | null
+          summary?: string | null
+          tags?: Json | null
+        }
+        Update: {
+          created_at?: string
+          headline?: string
+          id?: string
+          linked_event_id?: string | null
+          published_at?: string
+          risk_score?: number | null
+          source?: string | null
+          source_url?: string | null
+          summary?: string | null
+          tags?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_articles_linked_event_id_fkey"
+            columns: ["linked_event_id"]
+            isOneToOne: false
+            referencedRelation: "risk_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          plan: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          plan?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          plan?: string
+        }
+        Relationships: []
+      }
+      price_snapshots: {
+        Row: {
+          commodity: Database["public"]["Enums"]["commodity_type"]
+          id: string
+          price_usd: number
+          region_id: string | null
+          snapshot_at: string
+          unit: string
+        }
+        Insert: {
+          commodity: Database["public"]["Enums"]["commodity_type"]
+          id?: string
+          price_usd: number
+          region_id?: string | null
+          snapshot_at?: string
+          unit?: string
+        }
+        Update: {
+          commodity?: Database["public"]["Enums"]["commodity_type"]
+          id?: string
+          price_usd?: number
+          region_id?: string | null
+          snapshot_at?: string
+          unit?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "price_snapshots_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          org_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          org_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          org_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      regions: {
+        Row: {
+          country_code: string
+          created_at: string
+          id: string
+          latitude: number
+          longitude: number
+          name: string
+          risk_level: Database["public"]["Enums"]["severity_level"]
+          summary: string | null
+        }
+        Insert: {
+          country_code: string
+          created_at?: string
+          id?: string
+          latitude: number
+          longitude: number
+          name: string
+          risk_level?: Database["public"]["Enums"]["severity_level"]
+          summary?: string | null
+        }
+        Update: {
+          country_code?: string
+          created_at?: string
+          id?: string
+          latitude?: number
+          longitude?: number
+          name?: string
+          risk_level?: Database["public"]["Enums"]["severity_level"]
+          summary?: string | null
+        }
+        Relationships: []
+      }
+      risk_events: {
+        Row: {
+          affected_region_ids: Json | null
+          affected_route_ids: Json | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          detected_at: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id: string
+          resolved_at: string | null
+          severity: Database["public"]["Enums"]["severity_level"]
+          source_url: string | null
+          title: string
+        }
+        Insert: {
+          affected_region_ids?: Json | null
+          affected_route_ids?: Json | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          detected_at?: string
+          event_type: Database["public"]["Enums"]["event_type"]
+          id?: string
+          resolved_at?: string | null
+          severity: Database["public"]["Enums"]["severity_level"]
+          source_url?: string | null
+          title: string
+        }
+        Update: {
+          affected_region_ids?: Json | null
+          affected_route_ids?: Json | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          detected_at?: string
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          resolved_at?: string | null
+          severity?: Database["public"]["Enums"]["severity_level"]
+          source_url?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      routes: {
+        Row: {
+          annual_volume_bbl: number | null
+          created_at: string
+          destination_region_id: string | null
+          id: string
+          mode: Database["public"]["Enums"]["transport_mode"]
+          name: string
+          origin_region_id: string | null
+          risk_score: number | null
+          waypoints: Json | null
+        }
+        Insert: {
+          annual_volume_bbl?: number | null
+          created_at?: string
+          destination_region_id?: string | null
+          id?: string
+          mode: Database["public"]["Enums"]["transport_mode"]
+          name: string
+          origin_region_id?: string | null
+          risk_score?: number | null
+          waypoints?: Json | null
+        }
+        Update: {
+          annual_volume_bbl?: number | null
+          created_at?: string
+          destination_region_id?: string | null
+          id?: string
+          mode?: Database["public"]["Enums"]["transport_mode"]
+          name?: string
+          origin_region_id?: string | null
+          risk_score?: number | null
+          waypoints?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "routes_destination_region_id_fkey"
+            columns: ["destination_region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "routes_origin_region_id_fkey"
+            columns: ["origin_region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scenarios: {
+        Row: {
+          created_at: string
+          description: string | null
+          generated_at: string | null
+          id: string
+          is_public: boolean
+          is_saved: boolean
+          name: string
+          result_details: Json | null
+          result_summary: string | null
+          trigger_config: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          generated_at?: string | null
+          id?: string
+          is_public?: boolean
+          is_saved?: boolean
+          name: string
+          result_details?: Json | null
+          result_summary?: string | null
+          trigger_config?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          generated_at?: string | null
+          id?: string
+          is_public?: boolean
+          is_saved?: boolean
+          name?: string
+          result_details?: Json | null
+          result_summary?: string | null
+          trigger_config?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
+      suppliers: {
+        Row: {
+          capacity_bpd: number | null
+          created_at: string
+          criticality_score: number | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          metadata: Json | null
+          name: string
+          region_id: string | null
+          type: Database["public"]["Enums"]["supplier_type"]
+        }
+        Insert: {
+          capacity_bpd?: number | null
+          created_at?: string
+          criticality_score?: number | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          metadata?: Json | null
+          name: string
+          region_id?: string | null
+          type: Database["public"]["Enums"]["supplier_type"]
+        }
+        Update: {
+          capacity_bpd?: number | null
+          created_at?: string
+          criticality_score?: number | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          metadata?: Json | null
+          name?: string
+          region_id?: string | null
+          type?: Database["public"]["Enums"]["supplier_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "suppliers_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watchlist_items: {
+        Row: {
+          created_at: string
+          entity_id: string
+          entity_type: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "viewer" | "analyst" | "admin"
+      commodity_type: "jet_fuel" | "crude_brent" | "crude_wti" | "diesel"
+      event_type:
+        | "conflict"
+        | "sanction"
+        | "disaster"
+        | "strike"
+        | "accident"
+        | "policy"
+      severity_level: "low" | "watch" | "elevated" | "critical"
+      supplier_type: "refinery" | "port" | "pipeline" | "storage" | "chokepoint"
+      transport_mode: "sea" | "air" | "rail" | "pipeline"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +638,20 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["viewer", "analyst", "admin"],
+      commodity_type: ["jet_fuel", "crude_brent", "crude_wti", "diesel"],
+      event_type: [
+        "conflict",
+        "sanction",
+        "disaster",
+        "strike",
+        "accident",
+        "policy",
+      ],
+      severity_level: ["low", "watch", "elevated", "critical"],
+      supplier_type: ["refinery", "port", "pipeline", "storage", "chokepoint"],
+      transport_mode: ["sea", "air", "rail", "pipeline"],
+    },
   },
 } as const
