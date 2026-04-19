@@ -17,23 +17,43 @@ export const Route = createFileRoute("/auth/login")({
   component: LoginPage,
 });
 
+const DEMO_EMAIL = "demo@supplypulse.app";
+const DEMO_PASSWORD = "DemoPulse2026!";
+
 function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
+
+  async function signIn(emailValue: string, passwordValue: string) {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: emailValue,
+      password: passwordValue,
+    });
+    if (error) {
+      toast.error(error.message);
+      return false;
+    }
+    toast.success("Signed in");
+    navigate({ to: "/app/dashboard" });
+    return true;
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    await signIn(email, password);
     setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    toast.success("Signed in");
-    navigate({ to: "/app/dashboard" });
+  }
+
+  async function onDemo() {
+    setDemoLoading(true);
+    setEmail(DEMO_EMAIL);
+    setPassword(DEMO_PASSWORD);
+    await signIn(DEMO_EMAIL, DEMO_PASSWORD);
+    setDemoLoading(false);
   }
 
   return (
