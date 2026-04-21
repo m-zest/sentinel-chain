@@ -1,6 +1,6 @@
 # SentinelChain
 
-**Aviation fuel supply chain risk intelligence — in real time.**
+**Aviation fuel supply chain risk intelligence  -  in real time.**
 
 SentinelChain (internally *SupplyPulse*) is an operations dashboard for airline risk,
 fuel procurement, and supply chain teams. It consolidates chokepoints, refineries,
@@ -11,17 +11,17 @@ simulate disruptions, and act before a crisis spreads through the network.
 
 ## Features
 
-- **Risk Dashboard** — KPI surface for active events, jet fuel prices, watchlist
+- **Risk Dashboard**  -  KPI surface for active events, jet fuel prices, watchlist
   exposure, and regional buffers.
-- **World Risk Map** — live heatmap of refineries, chokepoints, and supply routes
+- **World Risk Map**  -  live heatmap of refineries, chokepoints, and supply routes
   with node-level drill-down.
-- **Dependency Graph** — upstream / downstream exposure: which airports depend on
+- **Dependency Graph**  -  upstream / downstream exposure: which airports depend on
   which refineries.
-- **What-If Simulator** — AI-driven scenarios (Strait of Hormuz closure, refinery
+- **What-If Simulator**  -  AI-driven scenarios (Strait of Hormuz closure, refinery
   outage, sanctions shifts) with structured impact estimates.
-- **Alerts** — rule-based price, event, and risk-score triggers via email and
+- **Alerts**  -  rule-based price, event, and risk-score triggers via email and
   in-app notifications.
-- **Intelligence Feed** — curated, scored news from Reuters, IATA, BBC, EIA, and
+- **Intelligence Feed**  -  curated, scored news from Reuters, IATA, BBC, EIA, and
   other primary sources.
 
 ## Tech stack
@@ -83,7 +83,7 @@ The app starts on `http://localhost:3000` by default.
 | `VITE_SUPABASE_PROJECT_ID`      | public  | Supabase project ID.                         |
 | `SUPABASE_URL`                  | server  | Mirror of the project URL for server code.   |
 | `SUPABASE_PUBLISHABLE_KEY`      | server  | Mirror of the anon key for server code.      |
-| `SUPABASE_SERVICE_ROLE_KEY`     | server  | Service role key — bypasses RLS, never ship. |
+| `SUPABASE_SERVICE_ROLE_KEY`     | server  | Service role key  -  bypasses RLS, never ship. |
 
 Any variable prefixed with `VITE_` is inlined into the client bundle. Keep
 secrets out of `VITE_*` names.
@@ -106,7 +106,7 @@ format directly, so no framework preset is required.
 
 1. Push the repo to GitHub / GitLab / Bitbucket.
 2. Import the project in the [Vercel dashboard](https://vercel.com/new).
-3. Leave the **Framework Preset** as "Other" — `vercel.json` already sets
+3. Leave the **Framework Preset** as "Other"  -  `vercel.json` already sets
    `buildCommand: npm run vercel-build` and `installCommand: npm ci`.
 4. Add the environment variables from the table above in **Project Settings →
    Environment Variables**.
