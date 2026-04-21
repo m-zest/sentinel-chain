@@ -12,7 +12,7 @@ export const Route = createFileRoute("/app/scenarios")({
         <div className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
           Coming in next build step
         </div>
-        <div className="mt-2 text-sm">Lovable AI Gateway edge function + scenario UI.</div>
+        <div className="mt-2 text-sm">AI gateway edge function + scenario UI.</div>
       </div>
     </div>
   ),
